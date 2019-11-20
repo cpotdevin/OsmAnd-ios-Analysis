@@ -14,7 +14,7 @@
     <h1>Eventual Connectivity・Wire iOS and Android App Analysis</h1>
 
     <p>
-            Wire has a NetworkStatus folder where constantly verifies the internet connection. In the case that there is no internet connection available a banner is shown at the top of the screen. Also, when the user tries to send a message Wire has a label where tells the user that the messaging it’s trying to be sent. After some time Wire shows two possible actions to be done: Resend the message or delete it. This is helpful to the user because it tells him that Wire tried to send it but it was not possible.  Finally, when the bar is touched it appears a message telling the user a better description of the current network state. All these messages and alerts are shown below: 
+        Wire has a NetworkStatus folder where constantly verifies the internet connection. In the case that there is no internet connection available a banner is shown at the top of the screen. Also, when the user tries to send a message Wire has a label where tells the user that the messaging it’s trying to be sent. In iOS devices, after some time, Wire shows two possible actions to be done: Resend the message or delete it. In Android devices just the resend button it’s available and it shows it immediately. This is helpful to the user because it tells him that Wire tried to send it but it was not possible. Finally, when the bar is touched it appears a message telling the user a better description of the current network state. The decisions made by Wire follows the good practices of usability, because shows to the user that something it’s wrong with the connection but allows him to do other actions and doesn’t block all the app. All these messages and alerts are shown below:  
     </p>
 
     <img src="../resources/images/EC-Introduction1.PNG" alt="EC-Introduction1">
@@ -22,6 +22,10 @@
     <img src="../resources/images/EC-Introduction3.PNG" alt="EC-Introduction3">
     <img src="../resources/images/EC-Introduction4.PNG" alt="EC-Introduction4">
     <img src="../resources/images/EC-Introduction5.PNG" alt="EC-Introduction5">
+    <img src="../resources/images/EC-Introduction6.jpg" alt="EC-Introduction6">
+    <img src="../resources/images/EC-Introduction7.jpg" alt="EC-Introduction7">
+
+    <h3>iOS</h3>
 
     <p>
         For this Wire has a View and a Controller, following the MVC of iOS, just avoiding the Model. In the first one Wire changes all the constraints and manages the Offline Bar if this has to be shown. The desition of what to do, which message to show and when is took by the Controller. Wire has all the code related to this in a folder to easily do find it and do changes. 
@@ -74,6 +78,20 @@
     <img src="../resources/images/EC-9.png" alt="EC-9">
 
     <p>It’s important to clarify that Wire does the same process without taking care of the type of message that failed to send.</p>
+
+    <h3>Android</h3>
+
+    <p>Wire’s Android project has also a connectivity files. </p>
+
+    <img src="../resources/images/EC-10.png" alt="EC-10">
+
+    <p>The “ConnectivityIndicatorView” file contains a Class with the same name, and contains all the methods that allows to show, hide and collapse it. The following code shows it in a better way:</p>
+
+    <img src="../resources/images/EC-11.png" alt="EC-11">
+
+    <p>Also, following the Android elements, Wire has a special fragment called “fragment_connectivity” to show “No internet” bar shown below:</p>
+
+    <img src="../resources/images/EC-12.png" alt="EC-12">
 </body>
 
 </html>
