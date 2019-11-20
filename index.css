@@ -1,3 +1,4 @@
+/* Developer profile styles */
 .devs {
     display: flex;
     flex-wrap: wrap;
@@ -27,4 +28,43 @@
 
 #potdevin-avatar {
     background-image: url('./resources/images/ChristianPotdevin.jpg');
+}
+
+/* Scrollama styles */
+.scrolly {
+    display: flex;
+    margin: 50px 0 0 -15%;
+    position: relative;
+    width: 130%;
+}
+
+.scrolly figure {
+    overflow: visible;
+    margin: 0;
+    position: sticky;
+    transform: translate3d(0, 0, 0);
+    z-index: 0;
+}
+
+.scrolly figure img {
+    height: 100%;
+}
+
+.scrolly .step {
+    border-left: solid 10px transparent;
+    margin-bottom: 200px;
+    padding: 0 20px 0 7px;
+    width: 400px;
+}
+
+.scrolly .step:first-child {
+    margin-top: 200px;
+}
+
+.scrolly .step:last-child {
+    margin-bottom: 66vh;
+}
+
+.scrolly .step.is-active {
+    border-left: solid 10px dodgerblue;
 }

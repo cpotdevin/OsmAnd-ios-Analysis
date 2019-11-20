@@ -1,13 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Performance・Wire iOS and Android App Analysis</title>
-        <link rel="stylesheet" type="text/css" href="/typesafe.css" />
-        <link rel="stylesheet" type="text/css" href="/index.css" />
+        <meta name="description" content="Wire App performance analysis">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="/typesafe.css">
+        <link rel="stylesheet" type="text/css" href="/index.css">
     </head>
     <body>
-        <p><a href="/index.html">Home</a></p>
-        <h1>Wire App Analysis・Performance</h1>
+        <main>
+            <p><a href="/index.html">Home</a></p>
+            <hr>
+            <h1>Wire App Analysis・Performance</h1>
+            <p>Phasellus tincidunt lorem vehicula, gravida arcu maximus, posuere arcu. Mauris semper nunc id orci vestibulum auctor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam maximus rhoncus tortor eu pharetra. Vivamus iaculis metus ante, nec pharetra nibh vestibulum ut. Nulla vitae diam vel urna dapibus mollis at mattis dui. Nullam in est viverra, condimentum tellus sed, fringilla nisi. Donec quis aliquam tellus. Sed dui ante, mattis quis justo et, mattis feugiat libero. Integer ante ante, molestie id risus vitae, rhoncus elementum eros. Sed nulla lectus, ornare sed orci ut, dapibus facilisis velit. Suspendisse at ante ut metus dictum pellentesque. Nunc venenatis tortor ut venenatis gravida. Sed nec iaculis nisl.</p>
+
+            <section>
+                <h2>Android Performance</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lobortis ante vitae consequat gravida. Nam turpis lectus, auctor nec neque sed, mattis eleifend turpis. Mauris risus odio, suscipit sit amet augue quis, interdum luctus nibh. Nullam molestie nisl tortor, a posuere libero suscipit a. Quisque viverra porttitor quam nec dignissim. Phasellus fermentum risus eu ex ullamcorper, eu fermentum ipsum luctus. Maecenas nisl turpis, dictum eget ex sed, laoreet aliquam ante. Morbi lacinia ante erat, eget porta nunc ornare sit amet. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean aliquet scelerisque sem ac vehicula.</p>
+
+                <section class="scrolly">
+                    <article>
+                        <div class="step scrolly1" data-step="0" img-src="https://picsum.photos/id/0/800/500">
+                            <p>Nullam maximus rhoncus tortor eu pharetra. Vivamus iaculis metus ante, nec pharetra nibh vestibulum ut.</p>
+                        </div>
+                        <div class="step scrolly1" data-step="1" img-src="https://picsum.photos/id/1/800/500">
+                            <p>Fusce vestibulum nisi lorem, ut sodales est elementum mattis. Cras vel neque ac metus luctus convallis in at nisl. In pulvinar, velit nec pulvinar pulvinar, risus nisi commodo nisi, et congue lacus nunc vel justo.</p>
+                        </div>
+                        <div class="step scrolly1" data-step="2" img-src="https://picsum.photos/id/2/800/500">
+                            <p>Etiam lobortis viverra mi in commodo. Integer iaculis ultrices ornare. Aliquam eget purus bibendum, sagittis velit non, placerat dolor. Nulla mauris enim, condimentum id luctus nec, imperdiet posuere sem. Mauris malesuada metus venenatis quam porta rhoncus. Pellentesque nisl libero, pellentesque quis pellentesque in, vulputate sed tortor. Cras sed pellentesque ex.</p>
+                        </div>
+                        <div class="step scrolly1" data-step="3" img-src="https://picsum.photos/id/4/800/500">
+                            <p>Nullam maximus rhoncus tortor eu pharetra. Vivamus iaculis metus ante, nec pharetra nibh vestibulum ut.</p>
+                        </div>
+                    </article>
+
+                    <figure class="scrolly1">
+                        <img src="https://picsum.photos/id/0/800/500">
+                    </figure>
+                </section>
+            </section>
+
+            <section>
+                    <h2>iOS Performance</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lobortis ante vitae consequat gravida. Nam turpis lectus, auctor nec neque sed, mattis eleifend turpis. Mauris risus odio, suscipit sit amet augue quis, interdum luctus nibh. Nullam molestie nisl tortor, a posuere libero suscipit a. Quisque viverra porttitor quam nec dignissim. Phasellus fermentum risus eu ex ullamcorper, eu fermentum ipsum luctus. Maecenas nisl turpis, dictum eget ex sed, laoreet aliquam ante. Morbi lacinia ante erat, eget porta nunc ornare sit amet. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean aliquet scelerisque sem ac vehicula.</p>
+
+                    <section class="scrolly">
+                        <article>
+                            <div class="step scrolly2" data-step="0" img-src="https://picsum.photos/id/10/300/500">
+                                <p>Nullam maximus rhoncus tortor eu pharetra. Vivamus iaculis metus ante, nec pharetra nibh vestibulum ut.</p>
+                            </div>
+                            <div class="step scrolly2" data-step="1" img-src="https://picsum.photos/id/11/300/500">
+                                <p>Fusce vestibulum nisi lorem, ut sodales est elementum mattis. Cras vel neque ac metus luctus convallis in at nisl. In pulvinar, velit nec pulvinar pulvinar, risus nisi commodo nisi, et congue lacus nunc vel justo.</p>
+                            </div>
+                            <div class="step scrolly2" data-step="2" img-src="https://picsum.photos/id/12/300/500">
+                                <p>Quisque vitae fermentum mauris, eu congue metus. Nullam id semper sem.</p>
+                            </div>
+                        </article>
+
+                        <figure class="scrolly2">
+                            <img src="https://picsum.photos/id/10/300/500">
+                        </figure>
+                    </section>
+                </section>
+        </main>
+
+        <hr>
+        <h3>Wire App</h3>
+        <ul>
+            <li><a href="https://github.com/wireapp">GitHub</a></li>
+            <li><a href="https://github.com/wireapp/wire-ios">iOS repository</a></li>
+            <li><a href="https://github.com/wireapp/wire-android">Android repository</a></li>
+        </ul>
+
+        <script src="/resources/js/d3.min.js"></script>
+        <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+        <script src="/resources/js/scrollama.min.js"></script>
+        <script src="/scrolly.js"></script>
     </body>
 </html>
