@@ -26,6 +26,11 @@ a:hover {
     color: dodgerblue;
 }
 
+img {
+    height: auto;
+    max-width: 100%;
+}
+
 pre {
     border: 1px solid lightgrey;
     overflow: auto;
