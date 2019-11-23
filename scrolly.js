@@ -1,5 +1,3 @@
-console.log('blablabla')
-
 const scroller = scrollama();
 
 const main = d3.select('main');
@@ -11,7 +9,7 @@ const figures = scrollys.selectAll('figure');
 function handleResize() {
     // const stepH = Math.floor(window.innerHeight * 0.75);
     // step.style('height', stepH + 'px');
-    const figureHeight = window.innerHeight * 4 / 5;
+    const figureHeight = window.innerHeight * 7 / 10;
     const figureMarginTop = (window.innerHeight - figureHeight) / 2;
     figures
         .style('height', figureHeight + 'px')
@@ -30,6 +28,17 @@ function handleStepEnter(response) {
     scrollys.select('figure.' + scrollerId)
         .select('img')
         .attr('src', response.element.getAttribute('img-src'));
+
+    const figcaption = response.element.getAttribute('figcaption');
+    if (figcaption) {
+        scrollys.select('figure.' + scrollerId)
+            .select('figcaption')
+            .html(figcaption);
+    } else {
+        scrollys.select('figure.' + scrollerId)
+            .select('figcaption')
+            .html('');
+    }
 }
 
 function setupStickyfill() {

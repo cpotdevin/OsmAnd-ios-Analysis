@@ -14,30 +14,69 @@
             <p><a href="/index.html">Home</a></p>
             <hr>
             <h1>Wire App Analysis・Performance</h1>
-            <p>Phasellus tincidunt lorem vehicula, gravida arcu maximus, posuere arcu. Mauris semper nunc id orci vestibulum auctor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nullam maximus rhoncus tortor eu pharetra. Vivamus iaculis metus ante, nec pharetra nibh vestibulum ut. Nulla vitae diam vel urna dapibus mollis at mattis dui. Nullam in est viverra, condimentum tellus sed, fringilla nisi. Donec quis aliquam tellus. Sed dui ante, mattis quis justo et, mattis feugiat libero. Integer ante ante, molestie id risus vitae, rhoncus elementum eros. Sed nulla lectus, ornare sed orci ut, dapibus facilisis velit. Suspendisse at ante ut metus dictum pellentesque. Nunc venenatis tortor ut venenatis gravida. Sed nec iaculis nisl.</p>
+            <p>To evaluate the performance of both Android and iOS Wire Apps we have defined a couple of scenarios that are likely to have performance problems. During these scenarios we will profile the application using its respective IDE to analyze its performance and identify possible problems. If a problem is identified during the scenarios we will attempt to improve the code in order to mitigate the performance problem. On the other hand if no problem is encountered we will dive into the codebase in an effort to identify the good design practices implemented in the App.</p>
 
+            <h2>Scenarios</h2>
+            <ul>
+                <li>
+                    Android Performance
+                    <ul>
+                        <li>Idle main screen</li>
+                    </ul>
+                </li>
+                <li>
+                    iOS Performance
+                    <ul>
+                        <li>Idle main screen</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2>Android Performance</h2>
             <section>
-                <h2>Android Performance</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lobortis ante vitae consequat gravida. Nam turpis lectus, auctor nec neque sed, mattis eleifend turpis. Mauris risus odio, suscipit sit amet augue quis, interdum luctus nibh. Nullam molestie nisl tortor, a posuere libero suscipit a. Quisque viverra porttitor quam nec dignissim. Phasellus fermentum risus eu ex ullamcorper, eu fermentum ipsum luctus. Maecenas nisl turpis, dictum eget ex sed, laoreet aliquam ante. Morbi lacinia ante erat, eget porta nunc ornare sit amet. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean aliquet scelerisque sem ac vehicula.</p>
+                <h3>Idle main screen</h3>
+                <p>The purpose of this scenario is to determine if the App has any overdraw performance issues.</p>
 
                 <section class="scrolly">
                     <article>
-                        <div class="step scrolly1" data-step="0" img-src="https://picsum.photos/id/0/800/500">
-                            <p>Nullam maximus rhoncus tortor eu pharetra. Vivamus iaculis metus ante, nec pharetra nibh vestibulum ut.</p>
+                        <div class="step scrolly1" data-step="0" img-src="/resources/images/android-performance/idle-main-screen/fig00.jpg">
+                            <p>This is the screen we will be analyzing; looks pretty right? Let's take a look at it through Android Studio's profiler to see if we find any issues.</p>
                         </div>
-                        <div class="step scrolly1" data-step="1" img-src="https://picsum.photos/id/1/800/500">
-                            <p>Fusce vestibulum nisi lorem, ut sodales est elementum mattis. Cras vel neque ac metus luctus convallis in at nisl. In pulvinar, velit nec pulvinar pulvinar, risus nisi commodo nisi, et congue lacus nunc vel justo.</p>
+                        <div class="step scrolly1" data-step="1" img-src="/resources/images/android-performance/idle-main-screen/fig01.jpg">
+                            <p>Everything looks pretty normal: CPU usage is low, memory usage is constant, there are update requests every 30 seconds, and energy usage is low. Lets take a closer look at the memory usage.</p>
                         </div>
-                        <div class="step scrolly1" data-step="2" img-src="https://picsum.photos/id/2/800/500">
-                            <p>Etiam lobortis viverra mi in commodo. Integer iaculis ultrices ornare. Aliquam eget purus bibendum, sagittis velit non, placerat dolor. Nulla mauris enim, condimentum id luctus nec, imperdiet posuere sem. Mauris malesuada metus venenatis quam porta rhoncus. Pellentesque nisl libero, pellentesque quis pellentesque in, vulputate sed tortor. Cras sed pellentesque ex.</p>
+                        <div class="step scrolly1" data-step="2" img-src="/resources/images/android-performance/idle-main-screen/fig02.jpg">
+                            <p>The dotted line shows the number of allocated objects in the app heap. It appears to be going up at a constant rate and doesn't go down even after a while.</p>
                         </div>
-                        <div class="step scrolly1" data-step="3" img-src="https://picsum.photos/id/4/800/500">
-                            <p>Nullam maximus rhoncus tortor eu pharetra. Vivamus iaculis metus ante, nec pharetra nibh vestibulum ut.</p>
+                        <div class="step scrolly1" data-step="3" img-src="/resources/images/android-performance/idle-main-screen/fig03.jpg">
+                            <p>Taking a sample of 10 seconds we can see that from 2,966 allocated objects 2,961 were <code>Float</code> objects, but we're not doing anything! Where are these comming from?</p>
+                        </div>
+                        <div class="step scrolly1" data-step="4" img-src="/resources/images/android-performance/idle-main-screen/fig04.jpg">
+                            <p>A closer inspection of these <code>Float</code> objects shows that the code that instantiates them is not part of the app's codebase but part of the Andorid API. Nevertheless, these are instantiated by an <code>ObjectAnimator</code> class so we can start off by looking for instances of these in the code.</p>
+                        </div>
+                        <div class="step scrolly1" data-step="5" img-src="/resources/images/android-performance/idle-main-screen/fig05.jpg">
+                            <p>Now that we know where to look we can go to the CPU profiler to locate the function calls that are instantiating these <code>Float</code> objects. Look at that! The green squares show us that the <code>InfiniteLoadingBarView</code> is the culprit. What is this class for you ask?</p>
+                        </div>
+                        <div class="step scrolly1" data-step="6" img-src="/resources/images/android-performance/idle-main-screen/fig06.gif">
+                            <p>This class is the one in charge of showing the red loading strip at the top of the screen when a message is received and is in the process of being downloaded. As you might have already guessed the problem is that the animation is never stopped even though the View's <code>Visible</code> value is set to <code>GONE</code>.</p>
+                        </div>
+                        <div class="step scrolly1" data-step="7" img-src="/resources/images/android-performance/idle-main-screen/fig07.jpg" figcaption="java/com/waz/zclient/views/InfiniteLoadingBarView.java">
+                            <p>As we can see here the animation is only started when the view is added and stopped only when the view is destroyed, but this view isn't always visible!</p>
+                        </div>
+                        <div class="step scrolly1" data-step="8" img-src="/resources/images/android-performance/idle-main-screen/fig08.jpg" figcaption="java/com/waz/zclient/views/InfiniteLoadingBarView.java">
+                            <p>Solving this problem is easy, first we remove the calls to start the animation when the <code>View</code> is inflated or attached and then we override the <code>setVisibility()</code> method so that it also updates the state of the animator. This solution helps maintain the code contained and simple for external use, i.e. when you hide the loader there is no need to worry about stopping the animation. Now lets rerun a profiling session with this change implemented to see if our solution was effective.</p>
+                        </div>
+                        <div class="step scrolly1" data-step="9" img-src="/resources/images/android-performance/idle-main-screen/fig09.jpg">
+                            <p>Now memory usage is much better, the number of allocated Objects is drastically smaller than before and there are no more <code>Float</code> objects being constantly instantiated.</p>
+                        </div>
+                        <div class="step scrolly1" data-step="10" img-src="/resources/images/android-performance/idle-main-screen/fig10.jpg">
+                            <p>Finally, if we compare the profiling obtained with the patch to the one obtained at the beginning of the exercies we can see an improvement in all measurements except for network usage.</p>
                         </div>
                     </article>
 
                     <figure class="scrolly1">
-                        <img src="https://picsum.photos/id/0/800/500">
+                        <figcaption></figcaption>
+                        <img src="/resources/images/android-performance/idle-main-screen/fig00.jpg">
                     </figure>
                 </section>
             </section>
