@@ -19,22 +19,25 @@
             <h2>Scenarios</h2>
             <ul>
                 <li>
-                    Android Performance
+                    <a href="#android-performance">Android Performance</a>
                     <ul>
-                        <li>Idle main screen</li>
+                        <li><a href="#android1">Idle main screen</a></li>
+                        <li><a href="#android2">Entering and exiting a conversation</a></li>
                     </ul>
                 </li>
                 <li>
-                    iOS Performance
+                    <a href="#ios-performance">iOS Performance</a>
                     <ul>
-                        <li>Idle main screen</li>
+                        <li><a href="#ios1">Idle main screen</a></li>
+                        <li><a href="#ios2">Entering and exiting a conversation</a></li>
                     </ul>
                 </li>
             </ul>
 
-            <h2>Android Performance</h2>
             <section>
-                <h3>Idle main screen</h3>
+                <h2 id="android-performance">Android Performance</h2>
+
+                <h3 id="android1">Idle main screen</h3>
                 <p>The purpose of this scenario is to determine if the App has any overdraw performance issues.</p>
 
                 <section class="scrolly">
@@ -79,30 +82,40 @@
                         <img src="/resources/images/android-performance/idle-main-screen/fig00.jpg">
                     </figure>
                 </section>
+
+                <h3 id="android2">Entering and exiting a conversation</h3>
+                <p>The purpose of this scenario is to determine if the App has any memory leaks during the creation and poping of screens.</p>
+
+                <section class="scrolly">
+                    <article>
+                        <div class="step scrolly2" data-step="0" img-src="/resources/images/android-performance/enter-exit-conversation/fig00.gif">
+                            <p>This is the process we will be analyzing: entering and exiting a conversation. Since we are engineers and engineers are lazy by nature lets make a shell script that uses <code>adb</code> and will perform this action repeatedly without having to tap the phone!</p>
+                        </div>
+                        <div class="step scrolly2" data-step="1" img-src="/resources/images/android-performance/enter-exit-conversation/fig01.jpg">
+                            <p>This script taps on two places on the phone in intervals of a second the number of times that is specified by the input parameter. It also tells us how many iterations it has completed after each one. Lets profile the app and run 100 repetitions to see what happens.</p>
+                        </div>
+                        <div class="step scrolly2" data-step="2" img-src="/resources/images/android-performance/enter-exit-conversation/fig02.jpg">
+                            <p>After 100 iterations this is the result. Lets take a closer look at memory usage.</p>
+                        </div>
+                        <div class="step scrolly2" data-step="3" img-src="/resources/images/android-performance/enter-exit-conversation/fig03.jpg">
+                            <p>Looks like we've got a problem.</p>
+                        </div>
+                    </article>
+
+                    <figure class="scrolly2">
+                        <figcaption></figcaption>
+                        <img src="/resources/images/android-performance/enter-exit-conversation/fig00.gif">
+                    </figure>
+                </section>
             </section>
 
             <section>
-                    <h2>iOS Performance</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lobortis ante vitae consequat gravida. Nam turpis lectus, auctor nec neque sed, mattis eleifend turpis. Mauris risus odio, suscipit sit amet augue quis, interdum luctus nibh. Nullam molestie nisl tortor, a posuere libero suscipit a. Quisque viverra porttitor quam nec dignissim. Phasellus fermentum risus eu ex ullamcorper, eu fermentum ipsum luctus. Maecenas nisl turpis, dictum eget ex sed, laoreet aliquam ante. Morbi lacinia ante erat, eget porta nunc ornare sit amet. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean aliquet scelerisque sem ac vehicula.</p>
+                <h2 id="ios-performance">iOS Performance</h2>
 
-                    <section class="scrolly">
-                        <article>
-                            <div class="step scrolly2" data-step="0" img-src="https://picsum.photos/id/10/300/500">
-                                <p>Nullam maximus rhoncus tortor eu pharetra. Vivamus iaculis metus ante, nec pharetra nibh vestibulum ut.</p>
-                            </div>
-                            <div class="step scrolly2" data-step="1" img-src="https://picsum.photos/id/11/300/500">
-                                <p>Fusce vestibulum nisi lorem, ut sodales est elementum mattis. Cras vel neque ac metus luctus convallis in at nisl. In pulvinar, velit nec pulvinar pulvinar, risus nisi commodo nisi, et congue lacus nunc vel justo.</p>
-                            </div>
-                            <div class="step scrolly2" data-step="2" img-src="https://picsum.photos/id/12/300/500">
-                                <p>Quisque vitae fermentum mauris, eu congue metus. Nullam id semper sem.</p>
-                            </div>
-                        </article>
+                <h3 id="ios1">Idle main screen</h3>
 
-                        <figure class="scrolly2">
-                            <img src="https://picsum.photos/id/10/300/500">
-                        </figure>
-                    </section>
-                </section>
+                <h3 id="ios2">Entering and exiting a conversation</h3>
+            </section>
         </main>
 
         <hr>
