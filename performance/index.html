@@ -10,23 +10,24 @@
         <link rel="stylesheet" type="text/css" href="/index.css">
     </head>
     <body>
+        <p><a href="/index.html">Home</a></p>
+        <hr>
+
         <main>
-            <p><a href="/index.html">Home</a></p>
-            <hr>
             <h1>Wire App Analysis・Performance</h1>
             <p>To evaluate the performance of both Android and iOS Wire Apps we have defined a couple of scenarios that are likely to have performance problems. During these scenarios we will profile the application using its respective IDE to analyze its performance and identify possible problems. If a problem is identified during the scenarios we will attempt to improve the code in order to mitigate the performance problem. On the other hand if no problem is encountered we will dive into the codebase in an effort to identify the good design practices implemented in the App.</p>
 
             <h2>Scenarios</h2>
             <ul>
                 <li>
-                    <a href="#android-performance">Android Performance</a>
+                    <a href="#android">Android</a>
                     <ul>
                         <li><a href="#android1">Idle main screen</a></li>
                         <li><a href="#android2">Entering and exiting a conversation</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#ios-performance">iOS Performance</a>
+                    <a href="#ios">iOS</a>
                     <ul>
                         <li><a href="#ios1">Idle main screen</a></li>
                         <li><a href="#ios2">Entering and exiting a conversation</a></li>
@@ -35,7 +36,7 @@
             </ul>
 
             <section>
-                <h2 id="android-performance">Android Performance</h2>
+                <h2 id="android">Android Performance</h2>
 
                 <h3 id="android1">Idle main screen</h3>
                 <p>The purpose of this scenario is to determine if the App has any overdraw performance issues.</p>
@@ -110,7 +111,7 @@
             </section>
 
             <section>
-                <h2 id="ios-performance">iOS Performance</h2>
+                <h2 id="ios">iOS Performance</h2>
 
                 <h3 id="ios1">Idle main screen</h3>
 
@@ -122,8 +123,8 @@
         <h3>Wire App</h3>
         <ul>
             <li><a href="https://github.com/wireapp">GitHub</a></li>
-            <li><a href="https://github.com/wireapp/wire-ios">iOS repository</a></li>
             <li><a href="https://github.com/wireapp/wire-android">Android repository</a></li>
+            <li><a href="https://github.com/wireapp/wire-ios">iOS repository</a></li>
         </ul>
 
         <script src="/resources/js/d3.min.js"></script>

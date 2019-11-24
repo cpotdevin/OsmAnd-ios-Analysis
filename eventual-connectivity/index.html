@@ -1,97 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Eventual Connectivity・Wire iOS and Android App Analysis</title>
+        <link rel="stylesheet" type="text/css" href="/typesafe.css" />
+        <link rel="stylesheet" type="text/css" href="/index.css" />
+    </head>
 
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Eventual Connectivity・Wire iOS and Android App Analysis</title>
-    <link rel="stylesheet" type="text/css" href="/typesafe.css" />
-    <link rel="stylesheet" type="text/css" href="/index.css" />
-</head>
+    <body>
+        <p><a href="/index.html">Home</a></p>
+        <hr>
 
-<body>
+        <main>
+            <h1>Wire App Analysis・Eventual Connectivity</h1>
+            <p>To test out how the Wire App performs under conditions which have a lack of connectivity we will proceed to carry out a set of actions with airplane mode turned on to make sure no connection to the internet is available. Also, for each action we will try to pinpoint the code that manages a lack of connectivity in each scenarios. The set of actions we will perform are the following:</p>
 
-    <p><a href="/index.html">Home</a></p>
-    <h1>Eventual Connectivity・Wire iOS and Android App Analysis</h1>
+            <ol>
+                <li>Signin</li>
+                <li>Open a conversation</li>
+                <li>Send a message</li>
+            </ol>
 
-    <p>
-        Wire has a NetworkStatus folder where constantly verifies the internet connection. In the case that there is no internet connection available a banner is shown at the top of the screen. Also, when the user tries to send a message Wire has a label where tells the user that the messaging it’s trying to be sent. In iOS devices, after some time, Wire shows two possible actions to be done: Resend the message or delete it. In Android devices just the resend button it’s available and it shows it immediately. This is helpful to the user because it tells him that Wire tried to send it but it was not possible. Finally, when the bar is touched it appears a message telling the user a better description of the current network state. The decisions made by Wire follows the good practices of usability, because shows to the user that something it’s wrong with the connection but allows him to do other actions and doesn’t block all the app. All these messages and alerts are shown below:  
-    </p>
+            <h2>Sections</h2>
+            <ul>
+                <li><a href="#android">Android</a></li>
+                <li><a href="#ios">iOS</a></li>
+            </ul>
 
-    <img src="../resources/images/EC-Introduction1.PNG" alt="EC-Introduction1">
-    <img src="../resources/images/EC-Introduction2.PNG" alt="EC-Introduction2">
-    <img src="../resources/images/EC-Introduction3.PNG" alt="EC-Introduction3">
-    <img src="../resources/images/EC-Introduction4.PNG" alt="EC-Introduction4">
-    <img src="../resources/images/EC-Introduction5.PNG" alt="EC-Introduction5">
-    <img src="../resources/images/EC-Introduction6.jpg" alt="EC-Introduction6">
-    <img src="../resources/images/EC-Introduction7.jpg" alt="EC-Introduction7">
+            <section>
+                <h2 id="android">Android</h2>
+                <p>Lets take a look at how the Android app takes care of connectivity problems.</p>
 
-    <h3>iOS</h3>
+                <section class="scrolly">
+                    <article>
+                        <div class="step scrolly1" data-step="0" img-src="/resources/images/android-connectivity/fig00.jpg" figcaption="manifests/AndroidManifest.xml">
+                            <p>First off, lets take a look at the Android manifest to determine what connectivity related permissions. Here we can see that the app requests permission to access <code>INTENET</code> and <code>ACCESS_NETWORK_STATE</code>.</p>
+                            <p>Next, lets take a look at the signup action without an internet connection.</p>
+                        </div>
+                        <div class="step scrolly1" data-step="1" img-src="/resources/images/android-connectivity/fig01.jpg">
+                            <p>As we can see here after trying to signup with a phone number the app shows a dialog prompting the user to check his/her internet connection. After a simple profiling to sample method calls we can find out how this is done.</p>
+                        </div>
+                        <div class="step scrolly1" data-step="2" img-src="/resources/images/android-connectivity/fig02.jpg" figcaption="java/com/waz/zclient/appentry/fragments/SignInFragment.scala">
+                            <p>Here we can see that a <code>onResponse()</code> method is defined to handle any error that occurs during the signin process and shows an error dialog to the user. Also, here we can see that they also create an <code>implicit</code> <code>ExecutionContext</code> that is later used when managing the <code>SignInMethod</code>. As we can see the definition of the <code>onResponse()</code> method allows the code to be more concise and manage all connection errors encountered when using any of the signin methods.</p>
+                            <p>Now lets take a look at what happens when a user opens a conversation while he/she has no internet connection.</p>
+                        </div>
+                        <div class="step scrolly1" data-step="3" img-src="/resources/images/android-connectivity/fig03.gif">
+                            <p>As can be seen the app encounters no problems and the conversation opens normally with the previously known information while informing the user that there is no internet connection available. This is good for user experience, i.e. a user can see his past conversations while knowing he will not receive new messages. Also, the conversation loads older messages from memory if the user scrolls to the top of the conversation.</p>
+                            <p>The important components here are the top yellow bar and the SQLite database used by the database to save and load messages.</p>
+                        </div>
+                    </article>
 
-    <p>
-        For this Wire has a View and a Controller, following the MVC of iOS, just avoiding the Model. In the first one Wire changes all the constraints and manages the Offline Bar if this has to be shown. The desition of what to do, which message to show and when is took by the Controller. Wire has all the code related to this in a folder to easily do find it and do changes. 
-    </p>
+                    <figure class="scrolly1">
+                        <figcaption>manifests/AndroidManifest.xml</figcaption>
+                        <img src="/resources/images/android-connectivity/fig00.jpg">
+                    </figure>
+                </section>
+            </section>
 
-    <img src="../resources/images/EC-Folder.png" alt="EC-Folder">
+            <p>
+                Wire has a NetworkStatus folder where constantly verifies the internet connection. In the case that there is no internet connection available a banner is shown at the top of the screen. Also, when the user tries to send a message Wire has a label where tells the user that the messaging it’s trying to be sent. In iOS devices, after some time, Wire shows two possible actions to be done: Resend the message or delete it. In Android devices just the resend button it’s available and it shows it immediately. This is helpful to the user because it tells him that Wire tried to send it but it was not possible. Finally, when the bar is touched it appears a message telling the user a better description of the current network state. The decisions made by Wire follows the good practices of usability, because shows to the user that something it’s wrong with the connection but allows him to do other actions and doesn’t block all the app. All these messages and alerts are shown below:
+            </p>
 
-    <p>
-        Wire establish 3 different types of connection (Or non-connections) as a state. The first one is online, which is the desire and normal type of connection. When this case is the current one the offline bar is hidden. When one of the other two types is the current one the offline bar appears and shows a message according to the type of non-connection. Wire manages the state in an enum as shown below:
-    </p>
+            <img src="../resources/images/EC-Introduction1.PNG" alt="EC-Introduction1">
+            <img src="../resources/images/EC-Introduction2.PNG" alt="EC-Introduction2">
+            <img src="../resources/images/EC-Introduction3.PNG" alt="EC-Introduction3">
+            <img src="../resources/images/EC-Introduction4.PNG" alt="EC-Introduction4">
+            <img src="../resources/images/EC-Introduction5.PNG" alt="EC-Introduction5">
 
-    <img src="../resources/images/EC-1.png" alt="EC-1">
+            <h3>iOS</h3>
 
-    <p>
-        The message can be resent and the red button of “resend” is shown. To do this there is a full pipeline of calls that start calling the following method, on “MessageToolboxView” class, when the user taps that button:
-    </p>
+            <p>
+                For this Wire has a View and a Controller, following the MVC of iOS, just avoiding the Model. In the first one Wire changes all the constraints and manages the Offline Bar if this has to be shown. The desition of what to do, which message to show and when is took by the Controller. Wire has all the code related to this in a folder to easily do find it and do changes.
+            </p>
 
-    <img src="../resources/images/EC-2.png" alt="EC-2">
+            <img src="../resources/images/EC-Folder.png" alt="EC-Folder">
 
-    <p>This call the following method:</p>
+            <p>
+                Wire establish 3 different types of connection (Or non-connections) as a state. The first one is online, which is the desire and normal type of connection. When this case is the current one the offline bar is hidden. When one of the other two types is the current one the offline bar appears and shows a message according to the type of non-connection. Wire manages the state in an enum as shown below:
+            </p>
 
-    <img src="../resources/images/EC-3.png" alt="EC-3">
+            <img src="../resources/images/EC-1.png" alt="EC-1">
 
-    <p>As shown, it calls perform method with the action “.resend”. This is also called via Objective-C:</p>
+            <p>
+                The message can be resent and the red button of “resend” is shown. To do this there is a full pipeline of calls that start calling the following method, on “MessageToolboxView” class, when the user taps that button:
+            </p>
 
-    <img src="../resources/images/EC-4.png" alt="EC-4">
+            <img src="../resources/images/EC-2.png" alt="EC-2">
 
-    <p>There are different actions that can be performed. Wire established an enum to list them:</p>
+            <p>This call the following method:</p>
 
-    <img src="../resources/images/EC-5.png" alt="EC-5">
+            <img src="../resources/images/EC-3.png" alt="EC-3">
 
-    <p>To check it if the message can be resent there is a variable that stored this property:</p>
+            <p>As shown, it calls perform method with the action “.resend”. This is also called via Objective-C:</p>
 
-    <img src="../resources/images/EC-6.png" alt="EC-6">
+            <img src="../resources/images/EC-4.png" alt="EC-4">
 
-    <p>
-        In the “reloadContent” method, in the “MessageToolboxView” class, some cases are considered depending of what it’s is going to be painted. In the case of failure to send the message this happens: 
-    </p>
+            <p>There are different actions that can be performed. Wire established an enum to list them:</p>
 
-    <img src="../resources/images/EC-7.png" alt="EC-7">
+            <img src="../resources/images/EC-5.png" alt="EC-5">
 
-    <p>
-        This method just shows the red “resend” button and hides the others. The content that can be displayed it’s set by the following enum:
-    </p>
+            <p>To check it if the message can be resent there is a variable that stored this property:</p>
 
-    <img src="../resources/images/EC-8.png" alt="EC-8">
+            <img src="../resources/images/EC-6.png" alt="EC-6">
 
-    <p>Finally, the code that establishes all the style of the “resend” button is the following:</p>
+            <p>
+                In the “reloadContent” method, in the “MessageToolboxView” class, some cases are considered depending of what it’s is going to be painted. In the case of failure to send the message this happens:
+            </p>
 
-    <img src="../resources/images/EC-9.png" alt="EC-9">
+            <img src="../resources/images/EC-7.png" alt="EC-7">
 
-    <p>It’s important to clarify that Wire does the same process without taking care of the type of message that failed to send.</p>
+            <p>
+                This method just shows the red “resend” button and hides the others. The content that can be displayed it’s set by the following enum:
+            </p>
 
-    <h3>Android</h3>
+            <img src="../resources/images/EC-8.png" alt="EC-8">
 
-    <p>Wire’s Android project has also a connectivity files. </p>
+            <p>Finally, the code that establishes all the style of the “resend” button is the following:</p>
 
-    <img src="../resources/images/EC-10.png" alt="EC-10">
+            <img src="../resources/images/EC-9.png" alt="EC-9">
 
-    <p>The “ConnectivityIndicatorView” file contains a Class with the same name, and contains all the methods that allows to show, hide and collapse it. The following code shows it in a better way:</p>
+            <p>It’s important to clarify that Wire does the same process without taking care of the type of message that failed to send.</p>
 
-    <img src="../resources/images/EC-11.png" alt="EC-11">
+            <h3>Android</h3>
 
-    <p>Also, following the Android elements, Wire has a special fragment called “fragment_connectivity” to show “No internet” bar shown below:</p>
+            <p>Wire’s Android project has also a connectivity files. </p>
 
-    <img src="../resources/images/EC-12.png" alt="EC-12">
-</body>
+            <img src="../resources/images/EC-10.png" alt="EC-10">
 
+            <p>The “ConnectivityIndicatorView” file contains a Class with the same name, and contains all the methods that allows to show, hide and collapse it. The following code shows it in a better way:</p>
+
+            <img src="../resources/images/EC-11.png" alt="EC-11">
+
+            <p>Also, following the Android elements, Wire has a special fragment called “fragment_connectivity” to show “No internet” bar shown below:</p>
+
+            <img src="../resources/images/EC-12.png" alt="EC-12">
+        </main>
+
+        <hr>
+        <h3>Wire App</h3>
+        <ul>
+            <li><a href="https://github.com/wireapp">GitHub</a></li>
+            <li><a href="https://github.com/wireapp/wire-android">Android repository</a></li>
+            <li><a href="https://github.com/wireapp/wire-ios">iOS repository</a></li>
+        </ul>
+
+        <script src="/resources/js/d3.min.js"></script>
+        <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+        <script src="/resources/js/scrollama.min.js"></script>
+        <script src="/scrolly.js"></script>
+    </body>
 </html>
