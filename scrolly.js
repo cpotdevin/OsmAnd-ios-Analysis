@@ -18,8 +18,6 @@ function handleResize() {
 }
 
 function handleStepEnter(response) {
-    console.log(response);
-
     steps.classed('is-active', function(d, i) {
         return i === Number(response.element.getAttribute('data-step'));
     })
@@ -52,7 +50,7 @@ function init() {
     handleResize();
     scroller.setup({
         step: '.scrolly article .step',
-        offset: 0.33,
+        offset: 0.25,
         debug: false,
     }).onStepEnter(handleStepEnter);
 

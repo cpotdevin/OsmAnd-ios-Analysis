@@ -52,10 +52,15 @@
 }
 
 .scrolly .step {
-    border-left: solid 10px transparent;
     margin-bottom: 200px;
-    padding: 0 20px 0 7px;
     width: 400px;
+}
+
+.scrolly .step::before {
+    content: "";
+    display: block;
+    height: 15vh;
+    margin-top: -15vh;
 }
 
 .scrolly .step:first-child {
@@ -66,7 +71,12 @@
     margin-bottom: 50vh;
 }
 
-.scrolly .step.is-active {
+.scrolly .step p {
+    border-left: solid 10px transparent;
+    padding: 0 20px 0 7px;
+}
+
+.scrolly .step.is-active p {
     border-left: solid 10px dodgerblue;
 }
 
