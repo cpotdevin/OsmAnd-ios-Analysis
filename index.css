@@ -82,6 +82,7 @@
 
 .scrolly figure figcaption:not(:empty) {
     border: 1px solid gray;
+    border-bottom: 0px;
     font-family: monospace;
     padding: 5px 20px;
 }

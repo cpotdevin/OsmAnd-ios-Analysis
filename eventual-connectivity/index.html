@@ -88,8 +88,17 @@
                                 How exactly does Wire do this? Lets take a closer look at the codebase to better understand this.
                             </p>
                         </div>
-                        <div class="step scrolly1" data-step="10" img-src="/resources/images/android-connectivity/fig10.jpg">
-                            <p>As can be seen here Wire shows the sent message but includes a message bellow indicating that the message was not sent together with a button to retry to send the message. Also, Wire shows the top yellow bar indicating a lack of internet connection.</p>
+                        <div class="step scrolly1" data-step="10" img-src="/resources/images/android-connectivity/fig10.jpg" figcaption="java/com/waz/sync/handler/MessageSyncHandler.scala">
+                            <p>This job is performed by the <code>MessageSyncHandler</code> who, tries to post the message and if he receives an error he procedes to tell the <code>MessagesService</code> that the message failed to send by calling its <code>messageDeliveryFailed()</code> method with the message info.</p>
+                        </div>
+                        <div class="step scrolly1" data-step="11" img-src="/resources/images/android-connectivity/fig11.jpg" figcaption="java/com/waz/services/messages/MessagesService.scala">
+                            <p>In <code>MessagesServiceImpl</code> we can see that it simply updates the state of that message and then tells the <code>MessagesContentUpdater</code> to update the message data.</p>
+                        </div>
+                        <div class="step scrolly1" data-step="12" img-src="/resources/images/android-connectivity/fig12.jpg" figcaption="java/com/waz/utils/CachedStorageImpl.scala">
+                            <p>This control path flows through two other classes until it reaches the <code>CachedStorageImpl</code> who updates both the cached storage and local database.</p>
+                        </div>
+                        <div class="step scrolly1" data-step="13" img-src="/resources/images/android-connectivity/fig13.jpg" figcaption="java/com/waz/zclient/messages/MessageView.scala">
+                            <p>This change translates into showing a "Retry" footer when the <code>MessageView</code> constructs the message in the <code>MessagesListView</code>.</p>
                         </div>
                     </article>
 
