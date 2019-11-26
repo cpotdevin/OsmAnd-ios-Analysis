@@ -2,70 +2,80 @@
 <html lang="en">
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>UX/UI・Wire iOS and Android App Analysis</title>
-    <link rel="stylesheet" type="text/css" href="/typesafe.css" />
-    <link rel="stylesheet" type="text/css" href="/index.css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>UX/UI・Wire iOS and Android App Analysis</title>
+	<link rel="stylesheet" type="text/css" href="/typesafe.css" />
+	<link rel="stylesheet" type="text/css" href="/index.css" />
 </head>
 
 <body>
-    <p><a href="/index.html">Home</a></p>
-    <h1>UX/UI・Wire iOS and Android App Analysis</h1>
+	<p><a href="/index.html">Home</a></p>
 
-    <p>
-            The first important thing to notice is that Wire doesn’t use the default elements of iOS or Android. In other words, Wire had made its own design of the main elements of the app. The design of the app is almost identical in both apps and doesn’t follow any of the design metaphors. However, it looks that try to follow the iOS design metaphor, and set aside Material Design. To avoid issues in the UI Wire make this all programmatically. In other words, the don’t use the storyboard or SwiftUI. This can be because they started doing the app before this was an option, especially the SwiftUI that was released a few weeks ago. Also, it is important to notice that the app just allows being in portrait mode in phones. Just allow being in landscape if it’s an iPad or tablet. Here is the example code that allows shows a network status bar on iPad depending on the orientation:
-    </p>
+	<main>
+		<h1>UX/UI・Wire iOS and Android App Analysis</h1>
+		<section>
+			<section class="scrolly">
+				<article>
 
-    <img src="../resources/images/UX-UI-Introduction.png" alt="UX-UI-Introduction">
+					<div class="step scrolly1" data-step="0" img-src="/resources/images/UX-UI/UX-UI1.png">
+						<p>
+							The first important thing to notice is that Wire doesn’t use the default elements of iOS or Android. In other words, Wire had made its own design of the main elements of the app. The design of the app is almost identical in both apps and doesn’t follow any of the design metaphors. However, it looks that try to follow the iOS design metaphor, and set aside Material Design. To avoid issues in the UI Wire make this all programmatically. In other words, the don’t use the storyboard or SwiftUI. This can be because they started doing the app before this was an option, especially the SwiftUI that was released a few weeks ago.
+						</p>
+						<br>
+					</div>
+					<div class="step scrolly1" data-step="1" img-src="/resources/images/UX-UI/UX-UI2.png">
+						<p>
+							The app works pretty similarly to other messaging apps. But as mention in Design Thinking page, Wire provides some extra functionalities that other messaging apps don’t have. To access almost all of these functionalities there is a bar at the bottom of the screen, or over the keyboard when shown. Something to notice is that the edit of text (Bold, Italic, etc) is not available in Android in the version tested. 
+						</p>
+					</div>
+					<div class="step scrolly1" data-step="2" img-src="/resources/images/UX-UI/UX-UI-Introduction.png"
+						figcaption="Sources/UserInterface/Components/NetworkStatus/NetworkStatusViewController.swift">
+						<p>
+							Also, it is important to notice that the app just allows being in portrait mode in phones. Just allow being in landscape if it’s an iPad or tablet. Here is the example code that allows shows a network status bar on iPad depending on the orientation:
+						</p>
+					</div>
+					<div class="step scrolly1" data-step="3" img-src="/resources/images/UX-UI/UX-UI-TechnicalDetails.png"
+						figcaption="Sources/UserInterface/Components/NetworkStatus/NetworkStatusView.swift">
+						<h2>Technical details</h2>
+						<p>
+							As mention before , to avoid issues in the UI Wire make this all programmatically. Having this in mind Wire takes some desitions of how to change the constraints fo the UI to make it look according to the design and screen size. For this, Wire has to know some information about the phone: the screen size. It’s important to mention that the latest models of the iPhone have a notch on the upper side of the screen. Wire changes the constraints of the elements in the UI depending on the existence of this notch. The code that does this is shown below:
+						</p>
+						<br>
+						<p>
+							Finally, something that is related to usability and good practices is that Wire only asks for permission
+							when needed. For example, when the user wants to send a voice message Wire asks for microphone
+							permission. Wire doesn’t ask for this when the app it’s first opened, just when they need to ask it.
+							This is important to the users because when the apps ask for permissions it’s better to show and prove
+							why the app needs that permission, and let the user decide if he wants to give the permissions.
+						</p>
+					</div>
+					<div class="step scrolly1" data-step="4" img-src="/resources/images/UX-UI/UX-UI-Bugs.jpg">
+						<h2>Bugs</h2>
+						<p>
+							As seen in the image, the label of the buttons “Forgot password” and “Enterprise login” are one over the other. This may be because the labels are too large in Spanish or because the constraints didn’t consider this as a possibility. 
+						</p>
+					</div>
+				</article>
 
-    <p>Also, the following code shows how does Wire knows the orientation of the device. </p>
+				<figure class="scrolly1">
+					<img src="/resources/images/UX-UI/UX-UI1.png">
+				</figure>
+			</section>
+		</section>
+	</main>
 
-    <img src="../resources/images/UX-UI-Introduction2.png" alt="UX-UI-Introduction2">
+	<hr>
+	<h3>Wire App</h3>
+	<ul>
+		<li><a href="https://github.com/wireapp">GitHub</a></li>
+		<li><a href="https://github.com/wireapp/wire-android">Android repository</a></li>
+		<li><a href="https://github.com/wireapp/wire-ios">iOS repository</a></li>
+	</ul>
 
-    <p>
-            The app works pretty similarly to other messaging apps. But as mention in Design Thinking page, Wire provides some extra functionalities that other messaging apps don’t have. To access almost all of these functionalities there is a bar at the bottom of the screen, or over the keyboard when shown. Something to notice is that the edit of text (Bold, Italic, etc) is not available in Android in the version tested. The user interfaces of these functionalities are shown below. 
-    </p>
-
-    <h3>iOS</h3>
-
-    <img src="../resources/images/UX-UI1.PNG" alt="UX-UI1">
-    <img src="../resources/images/UX-UI2.PNG" alt="UX-UI2">
-    <img src="../resources/images/UX-UI3.PNG" alt="UX-UI3">
-    <img src="../resources/images/UX-UI4.PNG" alt="UX-UI4">
-    <img src="../resources/images/UX-UI5.PNG" alt="UX-UI5">
-    <img src="../resources/images/UX-UI6.PNG" alt="UX-UI6">
-    <img src="../resources/images/UX-UI7.PNG" alt="UX-UI7">
-    <img src="../resources/images/UX-UI8.PNG" alt="UX-UI8">
-    <img src="../resources/images/UX-UI9.PNG" alt="UX-UI9">
-    <img src="../resources/images/UX-UI10.jpeg" alt="UX-UI10">
-
-    <h3>Android</h3>
-
-    <img src="../resources/images/UX-UI-Android1.PNG" alt="UX-UI-Android1">
-    <img src="../resources/images/UX-UI-Android2.PNG" alt="UX-UI-Android2">
-    <img src="../resources/images/UX-UI-Android3.PNG" alt="UX-UI-Android3">
-    <img src="../resources/images/UX-UI-Android4.PNG" alt="UX-UI-Android4">
-    <img src="../resources/images/UX-UI-Android5.PNG" alt="UX-UI-Android5">
-    <img src="../resources/images/UX-UI-Android6.PNG" alt="UX-UI-Android6">
-    <img src="../resources/images/UX-UI-Android7.PNG" alt="UX-UI-Android7">
-
-    <h3>Technical details</h3>
-
-    <p>
-            As mention before , to avoid issues in the UI Wire make this all programmatically. Having this in mind Wire takes some desitions of how to change the constraints fo the UI to make it look according to the design and screen size. For this, Wire has to know some information about the phone: the screen size. It’s important to mention that the latest models of the iPhone have a notch on the upper side of the screen.  Wire changes the constraints of the elements in the UI depending on the existence of this notch. The code that does this is shown below:  
-    </p>
-
-    <img src="../resources/images/UX-UI-TechnicalDetails.png" alt="UX-UI-TechnicalDetails">
-
-    <p>
-            Finally, something that is related to usability and good practices is that Wire only asks for permission when needed. For example, when the user wants to send a voice message Wire asks for microphone permission. Wire doesn’t ask for this when the app it’s first opened, just when they need to ask it. This is important to the users because when the apps ask for permissions it’s better to show and prove why the app needs that permission, and let the user decide if he wants to give the permissions. 
-    </p>
-
-    <h3>Bugs</h3>
-
-    <img src="../resources/images/UX-UI-Bugs.jpg" alt="UX-UI-Bugs">
-
-    <p>As seen in the image, the label of the buttons “Forgot password” and “Enterprise login” are one over the other. This may be because the labels are too large in Spanish or because the constraints didn’t consider this as a possibility. </p>
+	<script src="/resources/js/d3.min.js"></script>
+	<script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+	<script src="/resources/js/scrollama.min.js"></script>
+	<script src="/scrolly.js"></script>
 </body>
 
 </html>
