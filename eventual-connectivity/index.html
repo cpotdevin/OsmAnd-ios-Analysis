@@ -29,7 +29,9 @@
                     <ul><a href="#android2">Open a conversation</a></ul>
                     <ul><a href="#android3">Send a message</a></ul>
                 </li>
-                <li><a href="#ios">iOS</a></li>
+                <li>
+                    <a href="#ios">iOS</a>
+                </li>
             </ul>
 
             <section>
@@ -111,56 +113,61 @@
                     </figure>
                 </section>
                 
-                <h2 id="android">iOS</h2>
+                <h2 id="ios">iOS</h2>
                 <p>Lets take a look at how the iOS app takes care of connectivity problems.</p>
                 <section class="scrolly">
                     <article>
-                            <div class="step scrolly1" data-step="0" img-src="/resources/images/iOS-connectivity/EC-Introduction.png">
+                            <div class="step scrolly1" data-step="0" img-src="/resources/images/iOS-connectivity/EC-0.png">
+                                <p>
+                                    When the user tries to log in and has no Internet connection Wire shows a Message showing the lack of internet connection: 
+                                </p>
+                            </div>
+                            <div class="step scrolly1" data-step="1" img-src="/resources/images/iOS-connectivity/EC-Introduction.png">
                                 <p>
                                     Wire has a NetworkStatus folder where constantly verifies the internet connection. In the case that there is no internet connection available a banner is shown at the top of the screen. Also, when the user tries to send a message Wire has a label where tells the user that the messaging it’s trying to be sent. In iOS devices, after some time, Wire shows two possible actions to be done: Resend the message or delete it. In Android devices just the resend button it’s available and it shows it immediately. This is helpful to the user because it tells him that Wire tried to send it but it was not possible. Finally, when the bar is touched it appears a message telling the user a better description of the current network state. The decisions made by Wire follows the good practices of usability, because shows to the user that something it’s wrong with the connection but allows him to do other actions and doesn’t block all the app. All these messages and alerts are shown in the images:
                                 </p>
                             </div>
-                            <div class="step scrolly1" data-step="1" img-src="/resources/images/iOS-connectivity/EC-1.png">
+                            <div class="step scrolly1" data-step="2" img-src="/resources/images/iOS-connectivity/EC-1.png">
                                 <p>
                                     For this Wire has a View and a Controller, following the MVC of iOS, just avoiding the Model. In the first one Wire changes all the constraints and manages the Offline Bar if this has to be shown. The desition of what to do, which message to show and when is took by the Controller. Wire has all the code related to this in a folder to easily do find it and do changes.
                                 </p>
                             </div>
-                            <div class="step scrolly1" data-step="2" img-src="/resources/images/iOS-connectivity/EC-2.png" figcaption="Sources/UserInterface/Components/NetworkStatus/NetworkStatusViewDelegate.swift">
+                            <div class="step scrolly1" data-step="3" img-src="/resources/images/iOS-connectivity/EC-2.png" figcaption="Sources/UserInterface/Components/NetworkStatus/NetworkStatusViewDelegate.swift">
                                 <p>
                                     Wire establish 3 different types of connection (Or non-connections) as a state. The first one is online, which is the desire and normal type of connection. When this case is the current one the offline bar is hidden. When one of the other two types is the current one the offline bar appears and shows a message according to the type of non-connection. Wire manages the state in an enum in the <code>NetworkStatusView </code> class as shown below:
                                 </p>
                             </div>
-                            <div class="step scrolly1" data-step="3" img-src="/resources/images/iOS-connectivity/EC-3.png" figcaption="Sources/UserInterface/Conversation/Content/Content/Cells/Unity/MessageToolboxView.swift">
+                            <div class="step scrolly1" data-step="4" img-src="/resources/images/iOS-connectivity/EC-3.png" figcaption="Sources/UserInterface/Conversation/Content/Content/Cells/Unity/MessageToolboxView.swift">
                                 <p>
                                     The message can be resent and the red button of <code>resend</code> is shown. To do this there is a full pipeline of calls that start calling the following method, on <code>MessageToolboxView</code> class, when the user taps that button:
                                 </p>
                             </div>
-                            <div class="step scrolly1" data-step="4" img-src="/resources/images/iOS-connectivity/EC-4.png" figcaption="Sources/UserInterface/Conversation/Content/Cells/Unity/MessageToolboxView.swift">
+                            <div class="step scrolly1" data-step="5" img-src="/resources/images/iOS-connectivity/EC-4.png" figcaption="Sources/UserInterface/Conversation/Content/Cells/Unity/MessageToolboxView.swift">
                                 <p>
                                     This call the following method in the <code>ConversationMessageToolboxCell</code>, which is the one in charge of the display of the buttons on the message:
                                 </p>
                             </div>
-                            <div class="step scrolly1" data-step="5" img-src="/resources/images/iOS-connectivity/EC-5.png" figcaption="Sources/UserInterface/Conversation/Content/Cells/ConfigurationMessageCell/ConversationMessageActionController.swift">
+                            <div class="step scrolly1" data-step="6" img-src="/resources/images/iOS-connectivity/EC-5.png" figcaption="Sources/UserInterface/Conversation/Content/Cells/ConfigurationMessageCell/ConversationMessageActionController.swift">
                                 <p>
                                     As shown, it calls perform method with the action <code>.resend</code>, available in the <code>ConversationMessageActionController</code>, that establishes all the logic that allows to the view perform actions. This is also called via Objective-C:
                                 </p>
                             </div>
-                            <div class="step scrolly1" data-step="6" img-src="/resources/images/iOS-connectivity/EC-6.png" figcaption="Sources/UserInterface/Conversation/Content/Cells/MessageAction.swift">
+                            <div class="step scrolly1" data-step="7" img-src="/resources/images/iOS-connectivity/EC-6.png" figcaption="Sources/UserInterface/Conversation/Content/Cells/MessageAction.swift">
                                 <p>
                                     There are different actions that can be performed. Wire established an enum called <code>MessageAction</code> to list them, and let the app know which types of actions can be done:
                                 </p>
                             </div>
-                            <div class="step scrolly1" data-step="7" img-src="/resources/images/iOS-connectivity/EC-7.png" figcaption="Sources/Helpers/syncengine/ZMMessage.swift">
+                            <div class="step scrolly1" data-step="8" img-src="/resources/images/iOS-connectivity/EC-7.png" figcaption="Sources/Helpers/syncengine/ZMMessage.swift">
                                 <p>
                                     To check it if the message can be resent there is a variable that stored this property, available in the <code>ZMConversationMessage</code> class:
                                 </p>
                             </div>
-                            <div class="step scrolly1" data-step="8" img-src="/resources/images/iOS-connectivity/EC-8.png" figcaption="Sources/UserInterface/Conversation/Content/Cells/Utility/MessageToolboxView.swift">
+                            <div class="step scrolly1" data-step="9" img-src="/resources/images/iOS-connectivity/EC-8.png" figcaption="Sources/UserInterface/Conversation/Content/Cells/Utility/MessageToolboxView.swift">
                                 <p>
                                     In the <code>reloadContent</code> method, in the <code>MessageToolboxView</code> class, some cases are considered depending of what it’s is going to be painted. In the case of failure to send the message this happens: 
                                 </p>
                             </div>
-                            <div class="step scrolly1" data-step="9" img-src="/resources/images/iOS-connectivity/EC-9.png" figcaption="Sources/UserInterface/Conversation/Content/Cells/Utility/MessageToolboxDataSource.swift">
+                            <div class="step scrolly1" data-step="10" img-src="/resources/images/iOS-connectivity/EC-9.png" figcaption="Sources/UserInterface/Conversation/Content/Cells/Utility/MessageToolboxDataSource.swift">
                                 <p>
                                     This method just shows the red <code>resend</code> button and hides the others. The content that can be displayed it’s set by the following enum:
                                 </p>
