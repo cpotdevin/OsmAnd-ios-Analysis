@@ -29,8 +29,7 @@
                 <li>
                     <a href="#ios">iOS</a>
                     <ul>
-                        <li><a href="#ios1">Idle main screen</a></li>
-                        <li><a href="#ios2">Entering and exiting a conversation</a></li>
+                        <li><a href="#iosPerformanceVideo">Perfomance video detail</a></li>
                     </ul>
                 </li>
             </ul>
@@ -108,16 +107,54 @@
                         <img src="/resources/images/android-performance/enter-exit-conversation/fig00.gif">
                     </figure>
                 </section>
-            </section>
 
-            <section>
                 <h2 id="ios">iOS Performance</h2>
+                    <section class="scrolly">
+                        <article>    
+                            <div class="step scrolly2" data-step="0" img-src="/resources/images/iOS-performance/CPU.png">
+                                <p>Unfortunately, iOS doesn't have a built in a tool to perform user interactions such as <code>adb</code>. For this reason, we are going to perform an scenario and will check the metrics of CPU, Memory, Disk and Network usage. For this purpouse <code>Xcode</code> was used and the built in <code>simulator</code>. The scenario is described below:</p>
+                                <ul>
+                                    <li>Send a text message.</li>
+                                    <li>Send an image.</li>
+                                    <li>Send a voice message.</li>
+                                    <li>Send a location.</li>
+                                </ul>
+                                <p>
+                                    First let's take a look to the CPU usage. It can be seen that the highest value was 160%. This is a weird number and may be related with the simulator and the capabilites of get higher physical processor speeds that the device trying to simulate. This peek was reach when the image was selected and shown in the app. The second peek was reached when de the image was send. In the <a href="#iosPerformanceVideo">video</a> the perfomance can be seen in detail.
+                                </p>
+                            </div>
+                            <div class="step scrolly2" data-step="1" img-src="/resources/images/iOS-performance/Memory.png">
+                                <p>
+                                    Now, let's see the Memory. It can be seen that the highest value was 241,3 MB. The Memory usage started to be high when the image was selected and shown in the app. Then, when the voice message was being recorded the highest value was reached. After sending the voice message the memory usage value droped to 180 MB. Finally, when the location was being sent, the memory value reached 217 MB, which also is a high value. In the <a href="#iosPerformanceVideo">video</a> the perfomance can be seen in detail.
+                                </p>
+                            </div>
+                            <div class="step scrolly2" data-step="2" img-src="/resources/images/iOS-performance/Disk.png">
+                                <p>
+                                    Now, let's see the Disk. It can be seen that the highest value was 21,9 MB in reading and 59,9 MB in writing. The highest values were reached when the voice message was being recorded. In the <a href="#iosPerformanceVideo">video</a> the perfomance can be seen in detail.
+                                </p>
+                            </div>
+                            <div class="step scrolly2" data-step="3" img-src="/resources/images/iOS-performance/Network.png">
+                                <p>
+                                    Finally, let's see the Network. But... there's nothing to see. Unfortunately, for some reason <code>Xcode</code> didn't recognize any Network activity in all the process. This was made more than once and never happend nothing. From other device, attached to the same account, it was verified that the messages were being sent. In the <a href="#iosPerformanceVideo">video</a> the perfomance can be seen in detail.
+                                </p>
 
-                <h3 id="ios1">Idle main screen</h3>
-
-                <h3 id="ios2">Entering and exiting a conversation</h3>
+                                <p>
+                                    Something to notice, it's that the <a href="/ux-ui/index.html#bug2">bug</a> reported in <a href="/ux-ui/index.html">UX-UI</a> section appers here again. Every time the user wants to send a photo the problem with the keyboard showing up appers again. But, in the second attempt, sending a location, this bug doesn't appear. In the <a href="#iosPerformanceVideo">video</a> this can be seen better.
+                                </p>
+                            </div>
+                        </article>
+                        <figure class="scrolly2">
+                                <figcaption></figcaption>
+                                <img src="/resources/images/android-performance/enter-exit-conversation/fig00.gif">
+                            </figure>
+                    </section>
             </section>
+                    
         </main>
+
+        <h3>Perfomance video detail</h3>
+
+        <iframe id ="iosPerformanceVideo"width="942" height="530" src="https://www.youtube.com/embed/8D8Dl4vinZw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
         <hr>
         <h3>Wire App</h3>

@@ -13,6 +13,12 @@
 
 	<main>
 		<h1>UX/UI・Wire iOS and Android App Analysis</h1>
+
+		<h2>Sections</h2>
+		<ul>
+			<li><a href="#android1">Technical Details</a></li>
+			<li><a href="#android2">Bugs</a></li>
+		</ul>
 		<section>
 			<section class="scrolly">
 				<article>
@@ -44,19 +50,33 @@
 							Finally, something that is related to usability and good practices is that Wire only asks for permission when needed. For example, when the user wants to send a voice message Wire asks for microphone permission. Wire doesn’t ask for this when the app it’s first opened, just when they need to ask it. This is important to the users because when the apps ask for permissions it’s better to show and prove why the app needs that permission, and let the user decide if he wants to give the permissions.
 						</p>
 					</div>
-					<div class="step scrolly1" data-step="4" img-src="/resources/images/UX-UI/UX-UI-Bugs.jpg">
-						<h2>Bugs</h2>
-						<p>
-							As seen in the image, the label of the buttons “Forgot password” and “Enterprise login” are one over the other. This may be because the labels are too large in Spanish or because the constraints didn’t consider this as a possibility. 
-						</p>
-					</div>
+				</article>
+				<figure class="scrolly1">
+						<img src="/resources/images/UX-UI/UX-UI1.png">
+					</figure>
+			</section>
+
+			<h2>Bugs</h2>
+			<section class="scrolly">
+				<article>
+						<div class="step scrolly2" data-step="0" img-src="/resources/images/UX-UI/UX-UI-Bugs.jpg">
+							<p>
+								As seen in the image, the label of the buttons “Forgot password” and “Enterprise login” are one over the other. This may be because the labels are too large in Spanish or because the constraints didn’t consider this as a possibility. 
+							</p>
+						</div>
+						<div id="bug2" class="step scrolly2" data-step="1" img-src="/resources/images/UX-UI/WireBug.gif">
+							<p>
+								As seen in the GIF, when the user wants to send a location the keyboard shows up. This just not happens with location, also with images, videos and GIF's. This just happen one time with out taking care which one of these elements created this bug. After some interaction of the user the bug dissaper. 
+							</p>
+						</div>
 				</article>
 
-				<figure class="scrolly1">
-					<img src="/resources/images/UX-UI/UX-UI1.png">
-				</figure>
+				<figure class="scrolly2">
+						<img src="/resources/images/UX-UI/UX-UI-Bugs.jpg">
+					</figure>
 			</section>
 		</section>
+
 	</main>
 
 	<hr>
