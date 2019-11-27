@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Security・Wire iOS and Android App Analysis</title>
+        <meta name="description" content="Wire App performance analysis">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="/typesafe.css">
+        <link rel="stylesheet" type="text/css" href="/index.css">
+    </head>
+    <body>
+        <p><a href="/index.html">Home</a></p>
+        <hr>
+
+        <main>
+            <h1>Wire App Analysis・Security</h1>
+            <p>To evaluate the security features in the Wire app we will investigate the two most important data management processes in a messaging app: sending messages and storing message information on the phone.</p>
+
+            <h2>Scenarios</h2>
+            <ul>
+                <li>
+                    <a href="#android">Android</a>
+                    <ul>
+                        <li><a href="#android1">Sending</a></li>
+                        <li><a href="#android2">Storing</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#ios">iOS</a>
+                    <ul>
+                        <li><a href="#ios1">Sending</a></li>
+                        <li><a href="#ios2">Storing</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <section>
+                <h2 id="android">Android Security</h2>
+
+                <section class="scrolly">
+                    <article>
+                        <div id="android1" class="step scrolly1" data-step="0" img-src="/resources/images/android-security/fig00.jpg">
+                            <p>If we investigate the process of sending a message to the backend API we arrive to the method <code>postOtrMessage()</code> that encrypts the message content with the <code>OtrService</code> class.</p>
+                        </div>
+                        <div id="android1" class="step scrolly1" data-step="0" img-src="/resources/images/android-security/fig01.jpg">
+                            <p>The </p>
+                        </div>
+                    </article>
+
+                    <figure class="scrolly1">
+                        <figcaption></figcaption>
+                        <img src="/resources/images/android-security/fig01.jpg">
+                    </figure>
+                </section>
+        </main>
+
+        <hr>
+        <h3>Wire App</h3>
+        <ul>
+            <li><a href="https://github.com/wireapp">GitHub</a></li>
+            <li><a href="https://github.com/wireapp/wire-android">Android repository</a></li>
+            <li><a href="https://github.com/wireapp/wire-ios">iOS repository</a></li>
+        </ul>
+
+        <script src="/resources/js/d3.min.js"></script>
+        <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+        <script src="/resources/js/scrollama.min.js"></script>
+        <script src="/scrolly.js"></script>
+    </body>
+</html>
