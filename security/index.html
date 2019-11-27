@@ -29,8 +29,7 @@
                 <li>
                     <a href="#ios">iOS</a>
                     <ul>
-                        <li><a href="#ios1">Sending</a></li>
-                        <li><a href="#ios2">Storing</a></li>
+                        <li><a href="#ios1">Dependencies structure</a></li>
                     </ul>
                 </li>
             </ul>
@@ -53,6 +52,21 @@
                         <img src="/resources/images/android-security/fig01.jpg">
                     </figure>
                 </section>
+
+                <h2 id="ios">iOS Security</h2>
+                <section class="scrolly">
+                    <article>
+                        <div id="ios1" class="step scrolly2" data-step="0" img-src="/resources/images/iOS-security/WireDependencies.png">
+                            <p>According to <a href="https://github.com/wireapp/wire-ios/wiki">Wire's wiki</a> the app for iOS has some dependencies that are available from <a href="https://github.com/Carthage/Carthage">Cartage</a>. This dependencies are from Wire and provides different services to the main app. One of the most important dependencies is <a href="https://github.com/wireapp/wire-ios-transport">wire-ios-transportation</a>, which abstracts the network communication with Wire's backend. It handles authentication of requests, network failures and retries transparently. This has nearly 84% of the code in Objective-c. Also, Wire has another dependencie called <a href="https://github.com/wireapp/cryptobox">Cryptobox</a>, that provides a high-level API with persistent storage for the <a href="https://github.com/wireapp/proteus">proteus</a> implementation of the <a href="https://github.com/trevp/double_ratchet/wiki">axolotl</a> protocol. Cryptobox has all its code in Rust.</p>
+                        </div>
+                    </article>
+
+                    <figure class="scrolly2">
+                        <figcaption></figcaption>
+                        <img src="/resources/images/android-security/fig01.jpg">
+                    </figure>
+                </section>
+            </section>
         </main>
 
         <hr>

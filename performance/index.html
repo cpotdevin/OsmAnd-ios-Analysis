@@ -135,7 +135,7 @@
                             </div>
                             <div class="step scrolly2" data-step="3" img-src="/resources/images/iOS-performance/Network.png">
                                 <p>
-                                    Finally, let's see the Network. But... there's nothing to see. Unfortunately, for some reason <code>Xcode</code> didn't recognize any Network activity in all the process. This was made more than once and never happend nothing. From other device, attached to the same account, it was verified that the messages were being sent. In the <a href="#iosPerformanceVideo">video</a> the perfomance can be seen in detail.
+                                    Finally, let's see the Network. But... there's nothing to see. Unfortunately, for some reason <code>Xcode</code> didn't recognize any Network activity in all the process. This was made more than once and never happend nothing. From other device, attached to the same account, it was verified that the messages were being sent. This happens because all the processes in charge of sending and receiving the information are in the dependencies, more precisely in the <a href="https://github.com/wireapp/wire-ios-transport">wire-ios-transportation</a> dependence. This is also a <code>Xcode</code> project, but written mostly in Objective-C. In the <a href="#iosPerformanceVideo">video</a> the perfomance can be seen in detail.
                                 </p>
 
                                 <p>
