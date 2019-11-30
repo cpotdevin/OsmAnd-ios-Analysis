@@ -42,9 +42,6 @@
                         <div id="android1" class="step scrolly1" data-step="0" img-src="/resources/images/android-security/fig00.jpg">
                             <p>If we investigate the process of sending a message to the backend API we arrive to the method <code>postOtrMessage()</code> that encrypts the message content with the <code>OtrService</code> class.</p>
                         </div>
-                        <div id="android1" class="step scrolly1" data-step="0" img-src="/resources/images/android-security/fig01.jpg">
-                            <p>The </p>
-                        </div>
                     </article>
 
                     <figure class="scrolly1">
@@ -56,14 +53,17 @@
                 <h2 id="ios">iOS Security</h2>
                 <section class="scrolly">
                     <article>
-                        <div id="ios1" class="step scrolly2" data-step="0" img-src="/resources/images/iOS-security/WireDependencies.png">
-                            <p>According to <a href="https://github.com/wireapp/wire-ios/wiki">Wire's wiki</a> the app for iOS has some dependencies that are available from <a href="https://github.com/Carthage/Carthage">Cartage</a>. This dependencies are from Wire and provides different services to the main app. One of the most important dependencies is <a href="https://github.com/wireapp/wire-ios-transport">wire-ios-transportation</a>, which abstracts the network communication with Wire's backend. It handles authentication of requests, network failures and retries transparently. This has nearly 84% of the code in Objective-c. Also, Wire has another dependencie called <a href="https://github.com/wireapp/cryptobox">Cryptobox</a>, that provides a high-level API with persistent storage for the <a href="https://github.com/wireapp/proteus">proteus</a> implementation of the <a href="https://github.com/trevp/double_ratchet/wiki">axolotl</a> protocol. Cryptobox has all its code in Rust.</p>
+                        <div id="ios1" class="step scrolly2" data-step="0" img-src="/resources/images/iOS-security/S1.png" figcaption="WireCryptobox/EncryptionSessionsDirectory.swift">
+                            <p>Wire has a dependency called <a href="https://github.com/wireapp/wire-ios-cryptobox">Cryptobox</a>  and is in charge of doing all the security things related with the app. More precisely, this dependency does all the hashing and encrypting in the app.</p>
+                        </div>
+                        <div id="ios2" class="step scrolly2" data-step="1" img-src="/resources/images/iOS-security/S2.png" figcaption="WireCryptobox/EncryptionSessionsDirectory.swift">
+                            <p>Also, creates the “fingerprint” of the device. This is used to verify from where has been sent a message, to prove the veracity of the sender. Also, this dependency can see the other “fingerprints” from other devices; from other users or the user himself. This is one of the biggest security functionalities that Wire provides in terms of security.</p>
                         </div>
                     </article>
 
                     <figure class="scrolly2">
                         <figcaption></figcaption>
-                        <img src="/resources/images/android-security/fig01.jpg">
+                        <img src="/resources/images/iOS-security/S1.png">
                     </figure>
                 </section>
             </section>

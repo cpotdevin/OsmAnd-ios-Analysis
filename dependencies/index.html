@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Security・Wire iOS and Android App Analysis</title>
+        <meta name="description" content="Wire App performance analysis">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="/typesafe.css">
+        <link rel="stylesheet" type="text/css" href="/index.css">
+    </head>
+    <body>
+        <p><a href="/index.html">Home</a></p>
+        <hr>
+
+        <main>
+            <h1>Wire App Analysis・Dependencies</h1>
+
+            <h2>Sections</h2>
+            <ul>
+                <li>
+                    <a href="#android">Android</a>
+                    <ul>
+                        <li><a href="#android1">1</a></li>
+                        <li><a href="#android2">2</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#ios">iOS</a>
+                </li>
+            </ul>
+
+            <section>
+                <h2 id="android">Android</h2>
+
+                <section class="scrolly">
+                    <article>
+                    </article>
+
+                    <figure class="scrolly1">
+                        <figcaption></figcaption>
+                        <img src="/resources/images/android-security/fig01.jpg">
+                    </figure>
+                </section>
+
+                <h2 id="ios">iOS</h2>
+                <section class="scrolly">
+                    <article>
+                        <div id="ios1" class="step scrolly2" data-step="0" img-src="/resources/images/iOS-dependencies/WireDependencies.png">
+                            <p>According to <a href="https://github.com/wireapp/wire-ios/wiki">Wire's wiki</a> the app for iOS has some dependencies that are available from <a href="https://github.com/Carthage/Carthage">Cartage</a>. This dependencies are from Wire and provides different services to the main app. The main dependencies are described below.</p>
+                        </div>
+                        <div id="ios1" class="step scrolly2" data-step="1" img-src="/resources/images/iOS-dependencies/WireTransport.png">
+                            <p>One of the most important dependencies is <a href="https://github.com/wireapp/wire-ios-transport">wire-ios-transport</a>, which abstracts the network communication with Wire's backend. It handles authentication of requests, network failures and retries transparently. This has nearly 84% of the code in Objective-c.</p>
+                        </div>
+                        <div id="ios1" class="step scrolly2" data-step="2" img-src="/resources/images/iOS-dependencies/WireCryptobox.png">
+                            <p>Wire has another dependencie called <a href="https://github.com/wireapp/cryptobox">Cryptobox</a>, that provides a high-level API with persistent storage for the <a href="https://github.com/wireapp/proteus">proteus</a> implementation of the <a href="https://github.com/trevp/double_ratchet/wiki">axolotl</a> protocol. The version of iOS is made in a big part in Swift (~78%).</p>
+                        </div>
+                        <div id="ios1" class="step scrolly2" data-step="3" img-src="/resources/images/iOS-dependencies/WireDataModel.png">
+                            <p><a href="https://github.com/wireapp/wire-ios-data-model">Wire data model</a> dependency is a CoreData-based storage library and implements the application data model and status observation. This dependency has the big part if its code in Swift (~65%) and the remaining part in Objective-c.</p>
+                        </div>
+                        <div id="ios1" class="step scrolly2" data-step="4" img-src="/resources/images/iOS-dependencies/WireSyncEngine.png">
+                            <p>Finally, Wire has a dependency called <a href="https://github.com/wireapp/wire-ios-sync-engine">Sync Engine</a> and is the entry point for the application. Integrates the functions of other frameworks. Responsible for:</p>
+                            <ul>
+                                <li>Integration of other frameworks with UI app.</li>
+                                <li>Integration of AVS.</li>
+                                <li>Push Notifications.</li>
+                                <li>High-level sync logic.</li>
+                                <li>Events processing.</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <figure class="scrolly2">
+                        <figcaption></figcaption>
+                        <img src="/resources/images/android-security/fig01.jpg">
+                    </figure>
+                </section>
+            </section>
+        </main>
+
+        <hr>
+        <h3>Wire App</h3>
+        <ul>
+            <li><a href="https://github.com/wireapp">GitHub</a></li>
+            <li><a href="https://github.com/wireapp/wire-android">Android repository</a></li>
+            <li><a href="https://github.com/wireapp/wire-ios">iOS repository</a></li>
+        </ul>
+
+        <script src="/resources/js/d3.min.js"></script>
+        <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+        <script src="/resources/js/scrollama.min.js"></script>
+        <script src="/scrolly.js"></script>
+    </body>
+</html>

@@ -29,6 +29,10 @@
                 <li>
                     <a href="#ios">iOS</a>
                     <ul>
+                        <li><a href="#ios1">Perfomance analysis</a></li>
+                        <li><a href="#ios2">Threads</a></li>
+                        <li><a href="#ios3">Cache</a></li>
+                        <li><a href="#ios4">Storage</a></li>
                         <li><a href="#iosPerformanceVideo">Perfomance video detail</a></li>
                     </ul>
                 </li>
@@ -108,10 +112,11 @@
                     </figure>
                 </section>
 
-                <h2 id="ios">iOS Performance</h2>
+                <h2 id="ios">iOS</h2>
+                    <h3 id="ios1">Perfomance analysis</h3>
                     <section class="scrolly">
                         <article>    
-                            <div class="step scrolly2" data-step="0" img-src="/resources/images/iOS-performance/CPU.png">
+                            <div class="step scrolly3" data-step="0" img-src="/resources/images/iOS-performance/CPU.png">
                                 <p>Unfortunately, iOS doesn't have a built in a tool to perform user interactions such as <code>adb</code>. For this reason, we are going to perform an scenario and will check the metrics of CPU, Memory, Disk and Network usage. For this purpouse <code>Xcode</code> was used and the built in <code>simulator</code>. The scenario is described below:</p>
                                 <ul>
                                     <li>Send a text message.</li>
@@ -123,17 +128,17 @@
                                     First let's take a look to the CPU usage. It can be seen that the highest value was 160%. This is a weird number and may be related with the simulator and the capabilites of get higher physical processor speeds that the device trying to simulate. This peek was reach when the image was selected and shown in the app. The second peek was reached when de the image was send. In the <a href="#iosPerformanceVideo">video</a> the perfomance can be seen in detail.
                                 </p>
                             </div>
-                            <div class="step scrolly2" data-step="1" img-src="/resources/images/iOS-performance/Memory.png">
+                            <div class="step scrolly3" data-step="1" img-src="/resources/images/iOS-performance/Memory.png">
                                 <p>
                                     Now, let's see the Memory. It can be seen that the highest value was 241,3 MB. The Memory usage started to be high when the image was selected and shown in the app. Then, when the voice message was being recorded the highest value was reached. After sending the voice message the memory usage value droped to 180 MB. Finally, when the location was being sent, the memory value reached 217 MB, which also is a high value. In the <a href="#iosPerformanceVideo">video</a> the perfomance can be seen in detail.
                                 </p>
                             </div>
-                            <div class="step scrolly2" data-step="2" img-src="/resources/images/iOS-performance/Disk.png">
+                            <div class="step scrolly3" data-step="2" img-src="/resources/images/iOS-performance/Disk.png">
                                 <p>
                                     Now, let's see the Disk. It can be seen that the highest value was 21,9 MB in reading and 59,9 MB in writing. The highest values were reached when the voice message was being recorded. In the <a href="#iosPerformanceVideo">video</a> the perfomance can be seen in detail.
                                 </p>
                             </div>
-                            <div class="step scrolly2" data-step="3" img-src="/resources/images/iOS-performance/Network.png">
+                            <div class="step scrolly3" data-step="3" img-src="/resources/images/iOS-performance/Network.png">
                                 <p>
                                     Finally, let's see the Network. But... there's nothing to see. Unfortunately, for some reason <code>Xcode</code> didn't recognize any Network activity in all the process. This was made more than once and never happend nothing. From other device, attached to the same account, it was verified that the messages were being sent. This happens because all the processes in charge of sending and receiving the information are in the dependencies, more precisely in the <a href="https://github.com/wireapp/wire-ios-transport">wire-ios-transportation</a> dependence. This is also a <code>Xcode</code> project, but written mostly in Objective-C. In the <a href="#iosPerformanceVideo">video</a> the perfomance can be seen in detail.
                                 </p>
@@ -143,10 +148,61 @@
                                 </p>
                             </div>
                         </article>
-                        <figure class="scrolly2">
+                        <figure class="scrolly3">
                                 <figcaption></figcaption>
                                 <img src="/resources/images/iOS-performance/CPU.png">
                             </figure>
+                    </section>
+
+                    <h3 id="ios2">Threads</h3>
+
+                    <section class="scrolly">
+                        <article>
+                            <div class="step scrolly4" data-step="0" img-src="/resources/images/iOS-performance/Thread.png" figcaption="Sources/Helpers/syncengine/ImageResource.swift">
+                                <p>Wire uses the <code>DispatchQueue</code> to use the threads available in iOS. This is used to do all the fetch needed by the user. There is a fetch per every type of message available in the app (e.g. images, text, profile images). As seen in the image, the fetch is assigned to the <code>main thread</code> in the <code>GCD</code>. This is may cause a problem, because this thread has in charge the UI and may cause a ANR, specially with some complex fetch such as images. It would be a better practice to do it in a lower priority queue, like <code>.background</code>, and leave the main thread free to most important tasks. </p>
+                            </div>
+                        </article>
+    
+                        <figure class="scrolly4">
+                            <figcaption></figcaption>
+                            <img src="/resources/images/iOS-performance/Thread.png">
+                        </figure>
+                    </section>
+
+                    <h3 id="ios3">Cache</h3>
+
+                    <section class="scrolly">
+                        <article>
+                            <div class="step scrolly5" data-step="0" img-src="/resources/images/iOS-performance/Cache.png" figcaption="Sources/Helpers/syncengine/ImageResource.swift">
+                                <p>Wire has a class for the Images to save it in the cache, as the image shows it. It can be seen that Wire uses the <code>NSCache</code> class, which is a mutable collection you use to temporarily store transient key-value pairs. In this case Wire uses again the threads available in the <code>GCD</code>, but this time it uses the <code>DispatchQueue</code> using the <code>.background </code> queue, leaving the main thread free. </p>
+                            </div>
+                            <div class="step scrolly5" data-step="1" img-src="/resources/images/iOS-performance/Fetch.png" figcaption="Sources/Helpers/syncengine/ImageResource.swift">
+                                <p>Also, as shown in the image of <a href="#ios2">Threads</a> section, the cache is used to avoid the fetch of the image. But in the case that the fetch has to be done the image is stored in the cache. All this process is done with images and Profile Images, but apparently not done in other type of messages.</p>
+                            </div>
+                        </article>
+    
+                        <figure class="scrolly5">
+                            <figcaption></figcaption>
+                            <img src="/resources/images/iOS-performance/Cache.png">
+                        </figure>
+                    </section>
+
+                    <h3 id="ios4">Storage</h3>
+
+                    <section class="scrolly">
+                        <article>
+                            <div class="step scrolly6" data-step="0" img-src="/resources/images/iOS-performance/Thread.png" figcaption="WireDataModel/Resources/zmessaging.xcdatamodeld">
+                                <p>Wire use <code>CoreData</code> to save the information in the Device. For this purpose, Wire created a <code>.xcdatamodeld </code> file where all the tables are declared. Everyone has its attributes and relationships. It’s important to clarify that this processes are in one of the dependices, called <code>WireDataModel</code> that is a CoreData-based storage library and implements the application data model and status observation. </p>
+                            </div>
+                            <div class="step scrolly6" data-step="1" img-src="/resources/images/iOS-performance/NSPersistent.png">
+                                <p>Wire use a <code>NSPersistentStoreCoordinator</code> to save the data, which is a coordinator that uses the model to help contexts and persistent stores communicate. </p>
+                            </div>
+                        </article>
+    
+                        <figure class="scrolly6">
+                            <figcaption></figcaption>
+                            <img src="/resources/images/iOS-performance/Thread.png">
+                        </figure>
                     </section>
             </section>
                     
